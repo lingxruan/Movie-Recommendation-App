@@ -1,4 +1,3 @@
-//for creating a graphical user interface
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,14 +7,12 @@ import java.util.List;
 
 public class MovieRecommendationSystemGUI extends JFrame implements ActionListener {
     
-    //These are instance variables used in the implementation of a graphical user interface-based movie recommendation system
-    private HashMap<String, ArrayList<String>> movieDatabase; //stores movie information by genre
-    private ArrayList<String> favoriteMovies; //stores the user's favorite movies
-    private JComboBox<String> genreComboBox; //provides a list of genres to choose from
-    private JTextArea recommendationTextArea; //displays recommended movies based on the user's selection
+    private HashMap<String, ArrayList<String>> movieDatabase;
+    private ArrayList<String> favoriteMovies;
+    private JComboBox<String> genreComboBox;
+    private JTextArea recommendationTextArea;
 
     public MovieRecommendationSystemGUI() {
-        // Initialize the movie database and favorites list
         movieDatabase = new HashMap<>();
         movieDatabase.put("Action", new ArrayList<>(List.of("Die Hard", "The Matrix", "Terminator", "Judgement Day", "Mad Max:Fury Road", "John Wick", "Mission:Impossible-Fallout", "The Dark Knight", "The Equlizer", "Taken")));
         movieDatabase.put("Comedy", new ArrayList<>(List.of("Bridesmaids", "The Hangover", "Napoleon Dynamite", "Superbad", "Borat", "Means Girl", "Step Brothers", "Tootsie", "Wedding Crashers", "Ghostbusters")));
@@ -39,13 +36,11 @@ public class MovieRecommendationSystemGUI extends JFrame implements ActionListen
         movieDatabase.put("Biographical", new ArrayList<>(List.of("The Social Network", "A Beautiful Mind", "The Imitation Game", "The Theory of Everything", "The King's Speech", "Hidden Figures", "The Pursuit of Happyness", "The Blind Side", "The Wolf of Wall Street", "The Fighter", "Lincoln", "Schindler's List", "Gandhi", "Malcolm X", "Selma", "Frida", "Ray", "Catch Me If You Can", "Walk the Line", "Bohemian Rhapsody")));
         favoriteMovies = new ArrayList<>();
 
-        // Set up the GUI
         setTitle("Movie Recommendation System");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Create GUI components
         JLabel genreLabel = new JLabel("Select your favorite movie genre:");
         genreComboBox = new JComboBox<>(new String[]{"Action", "Comedy", "Drama", "Science Fiction", "Horror", "Romance", "Thriller", "Fantasy", "Animation", "Adventure", "Documentary", "Historical Fiction", "Mystery", "Crime", "War", "Western", "Sports", "Musical", "Family", "Biographical"});
         JButton recommendButton = new JButton("Get Recommendations");
@@ -58,7 +53,6 @@ public class MovieRecommendationSystemGUI extends JFrame implements ActionListen
         JButton favoritesButton = new JButton("My Favorites");
         favoritesButton.addActionListener(this);
 
-        // Create panels
         JPanel genrePanel = new JPanel(new GridLayout(2, 1));
         genrePanel.add(genreLabel);
         genrePanel.add(genreComboBox);
@@ -67,7 +61,6 @@ public class MovieRecommendationSystemGUI extends JFrame implements ActionListen
         buttonPanel.add(saveButton);
         buttonPanel.add(favoritesButton);
 
-        // Add components to JFrame
         add(genrePanel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -78,10 +71,8 @@ public class MovieRecommendationSystemGUI extends JFrame implements ActionListen
         gui.setVisible(true);
     }
    
-    //This is an implementation of the actionPerformed method that executes different actions based on the user's button click events
     @Override
 public void actionPerformed(ActionEvent e) {
-    //retrieves movie recommendations based on the selected genre and displays them in the recommendationTextArea
     if (e.getActionCommand().equals("Get Recommendations")) {
         String selectedGenre = (String) genreComboBox.getSelectedItem();
         ArrayList<String> movies = movieDatabase.get(selectedGenre);
@@ -95,7 +86,6 @@ public void actionPerformed(ActionEvent e) {
             }
             recommendationTextArea.setText(recommendations.toString());
         }
-     //saves the selected movie recommendation to a list of favorite movies
     } else if (e.getActionCommand().equals("Save Favorite")) {
         String selectedMovie = recommendationTextArea.getSelectedText();
         if (selectedMovie == null) {
@@ -104,7 +94,6 @@ public void actionPerformed(ActionEvent e) {
             favoriteMovies.add(selectedMovie);
             recommendationTextArea.setText("Added " + selectedMovie + " to favorites.");
         }
-    //displays the list of saved favorite movies in the recommendationTextArea
     } else if (e.getActionCommand().equals("My Favorites")) {
         if (favoriteMovies.size() == 0) {
             recommendationTextArea.setText("You have not saved any favorites yet.");
@@ -119,4 +108,5 @@ public void actionPerformed(ActionEvent e) {
     }
 }
 }
+
 
